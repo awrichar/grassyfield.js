@@ -4,13 +4,14 @@
  * @author Andrew Richardson <awrichardson6@gmail.com>
  *
  * Usage:
- *   // Attach to <canvas> with id "my_canvas"
- *   var field = new grassyField('my_canvas');
+ *   // Draw on <canvas> with id "my_canvas" with 50% saturation
+ *   var field = new grassyField('my_canvas', 0.5);
  */
-function grassyField(canvasId) {
+function grassyField(canvasId, saturation) {
   var self = this;
   self.element = document.getElementById(canvasId);
   self.canvas = new fabric.Canvas(canvasId);
+  self.saturation = saturation;
   self.blades = null;
   self.lastUpdate = new Date().getTime();
 
@@ -85,7 +86,7 @@ function grassyField(canvasId) {
     var startX = randRange(leftX, rightX);
 
     var colorVariance = maybeNegative(Math.random() * .25);
-    var color = colorStep(brown, green, window.saturation + colorVariance);
+    var color = colorStep(brown, green, self.saturation + colorVariance);
 
     var path = new fabric.Path('M ' + leftX + ' ' + bottomY + ' ' +
                                'Q ' + leftCurveX + ' ' + middleY + ' ' + startX + ' ' + topY + ' ' +
